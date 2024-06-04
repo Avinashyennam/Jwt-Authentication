@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-
-// mongoose.connect("mongodb://127.0.0.1/loginProject")
-mongoose.connect("mongodb://127.0.0.1/multi")
+require("dotenv").config();
+mongoose.connect(process.env.MONGOURL)
 .then(()=>{
     console.log("connected");
 })
@@ -9,17 +8,6 @@ mongoose.connect("mongodb://127.0.0.1/multi")
     console.log("Failed to connect ", e);
 });
 
-// const userSchema = new mongoose.Schema({
-//     name:{
-//         type: String,
-//         required: true,
-//     },
-//     password:{
-//         type: String,
-//         required: true,
-//     }
-// });
-                // changed to
 const userSchema = new mongoose.Schema({
     username:{
         type: String,
@@ -45,7 +33,5 @@ const transactionSchema = new mongoose.Schema({
 });
 const Transaction = mongoose.model('transactions', transactionSchema);
 
-// const collection = new mongoose.model("collection1",userSchema);
-// module.exports = collection;
 
 module.exports = {User, Transaction};

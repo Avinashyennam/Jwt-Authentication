@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-// const collection = require('./db');
 const {User, Transaction} = require("./db");
 const jwt = require("jsonwebtoken");
 app.use(express.json());
