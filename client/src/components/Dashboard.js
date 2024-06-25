@@ -1,9 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
+import { Link } from "react-router-dom";
+// import Admin from './Admin';
 import { useAuth } from "../AuthProvider";
+const {isAdmin} = useAuth;
+console.log(isAdmin);
 const Dashboard = () => {
   const auth = useAuth();
   const [name, setName] = useState(auth.user);
   const [pass, setPass] = useState(auth.token);
+  console.log(auth.isAdmin);
   // const {user} = auth.user;
   // const {token} = auth.token;
   console.log("User in dashboard is ", auth.user);
@@ -25,6 +30,9 @@ const Dashboard = () => {
         <button onClick={() => auth.logout()} className="btn-submit">
           logout
         </button>
+        {
+          (auth.isAdmin === true)?<Link to='/admin'><button>Admin</button></Link>:<><h1>You are a user</h1></>
+        }
       </div>
     </div>
   );

@@ -6,7 +6,9 @@ export default function Home() {
     const [users, setUsers] = useState({
         name: '',
         password: '',
+        category: ''
     })
+    
     // const navigate = useNavigate();
     const auth = useAuth();
     function handleChange(e) {
@@ -18,10 +20,19 @@ export default function Home() {
         });
         console.log(users);
     };
+
+    // function handleRadio(e){
+        
+    // }
     function handleSubmit(e) {
         e.preventDefault();
         if (users.username !== "" && users.password !== "") {
-            auth.loginAction(users);
+            if(users.category === 'admin'){
+                auth.admin(users);
+            }else{
+                auth.loginAction(users);
+            }
+            
             // return;
         }
         else{
@@ -46,6 +57,7 @@ export default function Home() {
     }
     return (
         <div style={center}>
+            {/* {if(users.category === 'admin')?onSubmit={}:onSubmit={}} */}
             <form onSubmit={handleSubmit} style={formStyles}>
                 <div style={flexcol}>
                     <label
@@ -70,10 +82,32 @@ export default function Home() {
                         onChange={handleChange}
                     />
                 </div>
+                <div style={flexcol}>
+                    <label
+                    >Admin</label>
+                    <input
+                        type="radio"
+                        value="admin"
+                        name="category"
+                        checked = {users.category === "admin"}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div style={flexcol}>
+                    <label
+                    >User</label>
+                    <input
+                        type="radio"
+                        value="user"
+                        name="category"
+                        checked = {users.category === "user"}
+                        onChange={handleChange}
+                    />
+                </div>
                 <button>Submit</button>
             </form>
             <h1>context is {auth.user}</h1>
-            {/* {console.log("username from auth is" ,auth.user)} */}
+            {(auth.isAdmin === true)?<h1>Admin logged in</h1>:<h1>User logged in</h1>}
         </div>
     )
 }

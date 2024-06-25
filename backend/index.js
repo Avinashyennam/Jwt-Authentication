@@ -22,19 +22,19 @@ app.post("/signup", signup);
 
 // app.get("/data", data);
 app.get("/:username/data", data);
-app.listen(5000, () => {
-    console.log("Port running on the port 5000");
-});
+
 
 app.post("/login", async (req, res) => {
-    const { name, password } = req.body;
+    const { name, password, category } = req.body;
     console.log("data from frontend is ",req.body);
     console.log("name from frontend is ",req.body.name);
     console.log("password from frontend is ",req.body.password);
+    console.log("type of user is ", req.body.category);
     const checkEmail = await User.findOne({
         $and: [
             { username: name },
-            { password: password }
+            { password: password },
+            { category: category}
         ]
     });
     console.log("checkEmail is ", checkEmail);
@@ -58,4 +58,30 @@ app.post("/login", async (req, res) => {
         res.json({message: "user not found"});
         console.log("failed to fetch user :(");
     }
+});
+
+app.post("/admin",async (req, res)=>{
+    const {name, password, category} = req.body;
+    const check = await User.findOne({
+        $and: [
+            { username: name },
+            { password: password },
+            { category: category}
+        ]
+    });
+    if(check){
+        res.json({
+            // message:"Admin logged in..",
+            user: check
+        })
+    }else{
+        res.json({
+            message:"Admin login failed",
+            user: check
+        });
+    }
+});
+
+app.listen(5000, () => {
+    console.log("Port running on the port 5000");
 });

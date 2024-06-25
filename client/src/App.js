@@ -4,6 +4,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
+import Admin from './components/Admin';
 import AuthProvider  from './AuthProvider';
 // import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -38,6 +39,7 @@ function App() {
           <Route element = {<PrivateRoute />}>
             <Route path='/dashboard' element = {<Dashboard />} />
           </Route>
+          <Route path='/admin' element = {<Admin />} />
           {/* <PrivateRoute path="/dashboard" element ={<Dashboard />} /> */}
         </Routes>
       </Router>
